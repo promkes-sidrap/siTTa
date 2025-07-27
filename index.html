@@ -10,10 +10,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Font Awesome CDN for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#0d6efd">
-<link rel="icon" type="image/png" href="icons/icon-192.png">
 
+ <link rel="manifest" href="/manifest.json">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Imunisasi TT">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+    <link rel="apple-touch-startup-image" href="/icons/icon-512x512.png"> </head>
 
     <style>
         /* CSS Variables for Global Font Sizing */
@@ -650,10 +654,10 @@
 
 <div class="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-300 shadow-md px-3 py-2 flex items-center justify-between gap-3 max-w-4xl mx-auto">
     
-    <!-- Tombol Simpan di kiri -->
+    <!-- Tombol Tutup di kiri -->
     <div>
-        <button type="button" id="saveDataButtonForm" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold shadow-md">
-            Simpan
+        <button type="button" id="closeFormBtn" class="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-lg font-semibold shadow-md">
+            Tutup
         </button>
     </div>
 
@@ -662,10 +666,10 @@
         <!-- Akan diisi oleh JavaScript -->
     </div>
 
-    <!-- Tombol Tutup di kanan -->
+    <!-- Tombol Simpan di kanan -->
     <div>
-        <button type="button" id="closeFormBtn" class="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-lg font-semibold shadow-md">
-            Tutup
+        <button type="button" id="saveDataButtonForm" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold shadow-md">
+            Simpan
         </button>
     </div>
 </div>
@@ -675,10 +679,10 @@
     <!-- Tampilan Laporan (Awalnya Tersembunyi) -->
     <div id="reportView" class="hidden p-2 md:p-4">
         <div class="sticky-header bg-white -mt-2 -mx-2 pt-2 pb-2 rounded-t-xl">
-            <h1 class="font-bold text-2xl text-center text-blue-800 mb-6">Laporan Imunisasi TT</h1>
+            <h1 class="font-bold text-2xl text-center text-blue-800 mb-1">Laporan Imunisasi TT</h1>
 
             <!-- START: Dropdown filter bulan dan tahun dalam 1 baris -->
-            <div class="flex flex-row flex-wrap gap-4 mb-6 items-center justify-center px-2">
+            <div class="flex flex-row flex-wrap gap-4 mb-3 items-center justify-center px-2">
                 <div id="monthFilterContainer" class="flex items-center gap-2">
                     <label for="monthFilter" class="text-sm font-medium text-gray-700">Bulan:</label>
                     <select id="monthFilter" class="block p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
@@ -694,19 +698,6 @@
             </div>
             <!-- END: Dropdown filter bulan dan tahun dalam 1 baris -->
 
-            <!-- NEW: Download Buttons Container -->
-            <div class="flex flex-col md:flex-row justify-start items-center gap-4 mb-6 px-2">
-                <h3 class="font-semibold text-lg text-gray-700 md:mr-4">Unduh Laporan:</h3>
-                <button id="downloadRecapReportBtn" class="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold shadow-md hover:bg-blue-700 transition-colors flex items-center justify-center w-full md:w-auto">
-                    <i class="fas fa-file-csv mr-2"></i> Laporan Rekapitulasi
-                </button>
-                <button id="downloadIndividualReportBtn" class="px-6 py-3 bg-green-600 text-white rounded-lg font-semibold shadow-md hover:bg-green-700 transition-colors flex items-center justify-center w-full md:w-auto">
-                    <i class="fas fa-file-alt mr-2"></i> Laporan Individu
-                </button>
-            </div>
-
-        </div>
-
         <div class="overflow-x-auto shadow-md rounded-lg border border-gray-200">
             <table id="reportTable" class="min-w-full divide-y divide-gray-200">
                 <thead id="reportTableHeader" class="bg-gray-50">
@@ -718,7 +709,21 @@
             </table>
         </div>
     </div>
+            <!-- NEW: Download Buttons Container -->
+<!-- NEW: Download Buttons Container -->
+<div class="flex flex-col md:flex-row justify-start items-center gap-4 mt-8 px-2">
+  <h3 class="font-semibold text-base text-gray-700 md:mr-4">📥 Download:</h3>
 
+  <button id="downloadRecapReportBtn" class="px-3 py-2 text-sm bg-blue-600 text-white rounded-lg font-semibold shadow-md hover:bg-blue-700 transition-colors flex items-center justify-center w-full md:w-auto">
+    <i class="fas fa-file-csv mr-2 text-base"></i> Laporan Rekapitulasi
+  </button>
+
+  <button id="downloadIndividualReportBtn" class="px-3 py-2 text-sm bg-green-600 text-white rounded-lg font-semibold shadow-md hover:bg-green-700 transition-colors flex items-center justify-center w-full md:w-auto">
+    <i class="fas fa-file-alt mr-2 text-base"></i> Laporan Individu
+  </button>
+</div>
+
+        </div>
 </div>
 
 <!-- Fixed Main Navigation Bar (Bottom) -->
@@ -726,15 +731,15 @@
     <div class="flex justify-around items-center max-w-4xl mx-auto">
         <!-- START: Tombol menu -->
         <button id="navShowListBtn" class="flex flex-col items-center justify-center px-2 py-1 text-[11px] text-white hover:text-white bg-blue-500 hover:bg-blue-600 rounded-md transition-all duration-200">
-            <i class="fas fa-list text-base mb-0"></i>
+            <i class="fas fa-list text-xl mb-0"></i>
             Register
         </button>
         <button id="navShowReportBtn" class="flex flex-col items-center justify-center px-2 py-1 text-[11px] text-white hover:text-white bg-purple-500 hover:bg-purple-600 rounded-md transition-all duration-200">
-            <i class="fas fa-chart-bar text-base mb-0"></i>
+            <i class="fas fa-chart-bar text-xl mb-0"></i>
             Laporan
         </button>
         <button id="navShowFormBtn" class="flex flex-col items-center justify-center px-2 py-1 text-[11px] text-white hover:text-white bg-green-500 hover:bg-green-600 rounded-md transition-all duration-200">
-            <i class="fas fa-plus-circle text-base mb-0"></i>
+            <i class="fas fa-plus-circle text-xl mb-0"></i>
             Tambah
         </button>
         <!-- END: Tombol menu -->
@@ -1474,7 +1479,7 @@
 
         if (statusT === 0) {
             const nextDoseDate = new Date();
-            nextDoseScheduleForDisplay = nextDoseDate.toLocaleDateString("id-ID", optionsLong);
+            nextDoseScheduleForDisplay = nextDoseDate.toLocaleDateString("id-ID", optionsShort);
             nextDoseScheduleForStorage = nextDoseDate.toISOString().split('T')[0]; // YYYY-MM-DD
             output.innerHTML = `<span>Status: T0</span><span>Jadwal: ${nextDoseScheduleForDisplay}</span>`;
         } else {
@@ -1493,7 +1498,7 @@
                     else if (statusT === 2) next.setMonth(next.getMonth() + 6);
                     else next.setFullYear(next.getFullYear() + 1);
                     
-                    nextDoseScheduleForDisplay = next.toLocaleDateString("id-ID", optionsLong);
+                    nextDoseScheduleForDisplay = next.toLocaleDateString("id-ID", optionsShort);
                     nextDoseScheduleForStorage = next.toISOString().split('T')[0]; // YYYY-MM-DD
                     output.innerHTML = `<span>Status: T${statusT}</span><span>Jadwal: ${nextDoseScheduleForDisplay}</span>`;
                 } else { // statusT === 5, but not a new TL visit
@@ -1509,7 +1514,7 @@
 
         // Siapkan data untuk disimpan ke Google Sheets
         let dataToSave = {
-            nik: nik,
+            nik: "'" + String(nik),
             nama: nama,
             desaKelurahan: desaKelurahan,
             alamat: alamat,
@@ -2469,7 +2474,7 @@
         } else if (item.jadwalDosisBerikutnya && item.jadwalDosisBerikutnya !== "Imunisasi TT lengkap (T5)") {
             const dateObj = new Date(item.jadwalDosisBerikutnya);
             if (!isNaN(dateObj)) {
-                displayJadwalDosisBerikutnya = dateObj.toLocaleDateString("id-ID", optionsLong);
+                displayJadwalDosisBerikutnya = dateObj.toLocaleDateString("id-ID", optionsShort);
             }
         }
         document.getElementById('detailJadwalDosisBerikutnya').innerText = displayJadwalDosisBerikutnya;
@@ -2495,7 +2500,7 @@ if (dosesArray.length > 0) {
         if (dose.date && typeof dose.date === 'string') {
             const dateObj = new Date(dose.date);
             if (!isNaN(dateObj)) {
-                doseDate = dateObj.toLocaleDateString("id-ID", optionsLong);
+                doseDate = dateObj.toLocaleDateString("id-ID", optionsShort);
             }
         }
 
@@ -3235,12 +3240,12 @@ if (dosesArray.length > 0) {
             if (!itemData) {
                 console.log("[showView-formView] New entry mode. Resetting form.");
                 resetForm(); 
-                formTitle.innerText = "Skrining Imunisasi TT (baru)"; // Atur judul untuk entri baru
+                formTitle.innerText = "Form Skrining Baru"; // Atur judul untuk entri baru
             }
             
             if (itemData) {
                 console.log("[showView-formView] Edit mode. Loading itemData:", itemData);
-                formTitle.innerText = "Riwayat Imunisasi TT (update)"; // Atur judul untuk pengeditan
+                formTitle.innerText = "Form Update Skrining"; // Atur judul untuk pengeditan
                 
                 // Mengisi kolom formulir dengan itemData
                 document.getElementById("nama").value = itemData.nama || '';
@@ -3595,5 +3600,23 @@ if (dosesArray.length > 0) {
   </div>
 </div>
 
+<body>
+    <script>
+        // Pastikan browser mendukung Service Worker
+        if ('serviceWorker' in navigator) {
+            // Daftarkan Service Worker setelah halaman selesai dimuat
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+                    // Registrasi berhasil
+                    console.log('ServiceWorker registered with scope: ', registration.scope);
+                }).catch(function(err) {
+                    // Registrasi gagal
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        } else {
+            console.log('Browser tidak mendukung Service Worker.');
+        }
+    </script>
 </body>
 </html>
