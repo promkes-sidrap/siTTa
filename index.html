@@ -477,6 +477,11 @@
 
 <!-- Main Content Area -->
 <div class="main-container max-w-4xl w-full bg-white p-2 rounded-xl shadow-lg md:p-4 mx-auto my-0 flex-grow overflow-y-auto hidden" style="margin-top: 60px; margin-bottom: 90px;">
+<div class="text-center mb-4">
+    <button id="installBtn" class="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 hidden">
+      📥 Pasang Aplikasi
+    </button>
+  </div>
     <!-- Tampilan Daftar Data -->
     <div id="listView" class="p-2 md:p-4">
         <div class="sticky-header bg-white -mt-2 -mx-2 pt-2 pb-2 rounded-t-xl">
@@ -3618,5 +3623,31 @@ if (dosesArray.length > 0) {
             console.log('Browser tidak mendukung Service Worker.');
         }
     </script>
+    <script>
+  let deferredPrompt;
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+
+    const installBtn = document.getElementById('installBtn');
+    installBtn.classList.remove('hidden');
+
+    installBtn.addEventListener('click', () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('Aplikasi berhasil diinstal');
+          } else {
+            console.log('Pengguna membatalkan instalasi');
+          }
+          deferredPrompt = null;
+        });
+      }
+    });
+  });
+</script>
 </body>
 </html>
+
