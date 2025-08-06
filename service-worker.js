@@ -1,9 +1,9 @@
 const CACHE_NAME = 'imunisasi-tt-cache-v2';
 const urlsToCache = [
   '/', // Ini penting untuk meng-cache root URL
-  '/index.html',
-  '/manifest.json',
-  '/service-worker.js', // Cache service worker itu sendiri
+  '/siTTa/index.html',
+  '/siTTa/manifest.json',
+  '/siTTa/service-worker.js', // Cache service worker itu sendiri
   // Aset CSS dan JS eksternal yang digunakan
   'https://cdn.tailwindcss.com',
   'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap',
@@ -12,8 +12,8 @@ const urlsToCache = [
   // '/js/app.js', // Contoh
   // '/css/style.css', // Contoh
   // Aset ikon
-  '/icons/icon-192x192.png',
-  '/icons/icon-512x512.png'
+  '/siTTa/icons/icon-192.png',
+  '/siTTa/icons/icon-512.png'
   // Tambahkan semua aset penting lainnya (misalnya gambar, font lokal) di sini
 ];
 
@@ -62,4 +62,5 @@ self.addEventListener('activate', event => {
     })
   );
 });
+
 
