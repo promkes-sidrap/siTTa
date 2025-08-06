@@ -2,7 +2,7 @@
   "name": "Aplikasi Imunisasi TT",
   "short_name": "Imunisasi TT",
   "description": "Aplikasi pencatatan imunisasi Tetanus Toxoid (TT)",
-  "start_url": "./index.html",
+  "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#4CAF50",
@@ -19,6 +19,7 @@
     }
   ]
 }
+
 
 
 
