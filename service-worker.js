@@ -1,44 +1,34 @@
-const CACHE_NAME = 'imunisasi-tt-cache-v1.0.6'; // Ubah versi setiap kali Anda memodifikasi aset
+const CACHE_NAME = 'imunisasi-tt-cache-v1';
 const urlsToCache = [
-  // Pastikan jalur ini benar relatif terhadap root aplikasi
-  '/', // Meng-cache root URL, yang akan mengarah ke index.html
-  '/index.html', // Halaman HTML utama Anda
+  '/', // Ini penting untuk meng-cache root URL
+  '/index.html',
   '/manifest.json',
-  '/service-worker.js', // Service Worker itu sendiri
-
-  // Aset CSS dan JS eksternal (CDN) yang Anda gunakan
+  '/service-worker.js', // Cache service worker itu sendiri
+  // Aset CSS dan JS eksternal yang digunakan
   'https://cdn.tailwindcss.com',
   'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap',
   'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css',
-
-  // Folder Ikon Anda
-  '/icons/icon-192.png',
-  '/icons/icon-512.png',
-
-  // Jika Anda punya file JS lokal terpisah selain yang di HTML
-  // Contoh: '/js/script_utama.js',
-  // Jika Anda punya file CSS lokal terpisah selain yang di HTML
-  // Contoh: '/css/main.css',
-
-  // Tambahkan semua aset lain yang penting untuk fungsi offline di sini
-  // Misalnya gambar latar belakang, font lokal, dll.
+  // Jika Anda memiliki file JS atau CSS lokal, tambahkan di sini:
+  // '/js/app.js', // Contoh
+  // '/css/style.css', // Contoh
+  // Aset ikon
+  '/icons/icon-192x192.png',
+  '/icons/icon-512x512.png'
+  // Tambahkan semua aset penting lainnya (misalnya gambar, font lokal) di sini
 ];
 
-// Event 'install': Dipicu saat Service Worker pertama kali diinstal
+// Event 'install': Meng-cache aset saat Service Worker pertama kali diinstal
 self.addEventListener('install', event => {
-  console.log('[Service Worker] Menginstal...');
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
-        console.log('[Service Worker] Cache dibuka, menambahkan URL ke cache:', urlsToCache);
-        return cache.addAll(urlsToCache).catch(error => {
-            console.error('[Service Worker] Gagal meng-cache URL:', error);
-        });
+        console.log('Opened cache');
+        return cache.addAll(urlsToCache);
       })
   );
 });
 
-// Event 'fetch': Dipicu setiap kali browser membuat permintaan jaringan
+// Event 'fetch': Mencegat permintaan jaringan dan menyajikannya dari cache jika tersedia
 self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request)
@@ -47,38 +37,28 @@ self.addEventListener('fetch', event => {
         if (response) {
           return response;
         }
-        // Jika tidak ada di cache, coba ambil dari jaringan
-        return fetch(event.request).catch(error => {
-            console.error('[Service Worker] Gagal mengambil dari jaringan:', error);
-            // Di sini Anda bisa mengembalikan halaman offline khusus jika ada
-            // atau aset fallback lainnya jika permintaan gagal (misalnya saat offline)
+        // Jika tidak ada di cache, ambil dari jaringan
+        return fetch(event.request).catch(() => {
+            // Ini untuk menangani kasus offline dan aset tidak di-cache
+            // Anda bisa mengembalikan halaman offline khusus di sini jika mau
+            // Misalnya: caches.match('/offline.html');
         });
       })
   );
 });
 
-// Event 'activate': Dipicu saat Service Worker baru mengambil alih kendali
+// Event 'activate': Membersihkan cache lama
 self.addEventListener('activate', event => {
-  console.log('[Service Worker] Mengaktifkan...');
-  // Bersihkan cache lama
   const cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames.map(cacheName => {
           if (cacheWhitelist.indexOf(cacheName) === -1) {
-            console.log('[Service Worker] Menghapus cache lama:', cacheName);
-            return caches.delete(cacheName);
+            return caches.delete(cacheName); // Hapus cache yang tidak ada dalam whitelist
           }
         })
       );
     })
   );
-  console.log('[Service Worker] Aktif dan siap melayani.');
-  // Ini penting agar Service Worker mengklaim semua klien terbuka segera
-  return self.clients.claim();
 });
-
-
-
-
