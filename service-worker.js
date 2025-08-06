@@ -1,4 +1,4 @@
-const CACHE_NAME = 'imunisasi-tt-cache-v1';
+const CACHE_NAME = 'imunisasi-tt-cache-v2';
 const urlsToCache = [
   '/', // Ini penting untuk meng-cache root URL
   '/index.html',
@@ -62,3 +62,4 @@ self.addEventListener('activate', event => {
     })
   );
 });
+
