@@ -1,4 +1,4 @@
-const CACHE_NAME = 'imunisasi-tt-cache-v2';
+const CACHE_NAME = 'imunisasi-tt-cache-v3';
 const urlsToCache = [
   '/', // Ini penting untuk meng-cache root URL
   '/siTTa/index.html',
@@ -62,5 +62,6 @@ self.addEventListener('activate', event => {
     })
   );
 });
+
 
 
