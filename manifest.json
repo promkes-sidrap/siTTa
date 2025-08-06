@@ -1,11 +1,11 @@
 {
-  "name": "Skrining TT Digital",
-  "short_name": "siTTa",
-  "description": "Aplikasi Skrining Imunisasi TT untuk Puskesmas",
-  "start_url": "/",
+  "name": "Aplikasi Imunisasi TT",
+  "short_name": "Imunisasi TT",
+  "description": "Aplikasi pencatatan imunisasi Tetanus Toxoid (TT)",
+  "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#0d6efd",
+  "theme_color": "#4CAF50",
   "icons": [
     {
       "src": "icons/icon-192.png",
@@ -19,6 +19,7 @@
     }
   ]
 }
+
 
 
 
